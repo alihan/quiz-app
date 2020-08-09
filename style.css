@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Nova+Square&display=swap");
 :root {
   background-color: rgb(29, 26, 26);
 }
@@ -102,44 +103,44 @@ h2 {
 /* End Page */
 
 .end-form-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 30rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 30rem;
 }
 
 input {
-    margin-bottom: 1rem;
-    width: 20rem;
-    padding: 1.5rem;
-    font-size: 1.8rem;
-    border: none;
-    box-shadow: 0 .1rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  margin-bottom: 1rem;
+  width: 20rem;
+  padding: 1.5rem;
+  font-size: 1.8rem;
+  border: none;
+  box-shadow: 0 0.1rem 1.4rem 0 rgba(86, 185, 235, 0.5);
 }
 
 input::placeholder {
-    color:#aaa;
+  color: #aaa;
 }
 
 #username {
-    margin-top: 3rem;
-    width: 100%;
-    outline: none;
+  margin-top: 3rem;
+  width: 100%;
+  outline: none;
 }
 
 #end-text {
-    font-size: 2.4rem;
-    color: #fff;
-    text-align: center;
+  font-size: 2.4rem;
+  color: #fff;
+  text-align: center;
 }
 
 #saveScoreBtn {
-    border: none;
+  border: none;
 }
 
 .fa-home {
-    margin-left: 1rem;
-    font-size: 2rem;
-    color: rgb(28, 26, 26);
+  margin-left: 1rem;
+  font-size: 2rem;
+  color: rgb(28, 26, 26);
 }

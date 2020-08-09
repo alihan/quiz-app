@@ -11,6 +11,10 @@ let questionCounter = 0;
 let availableQuestions = [];
 let questions = [];
 
+function trim(str) {
+  return JSON.stringify(str).replace(/(&quot\;|&#039;)/g, "'");
+}
+
 fetch("https://opentdb.com/api.php?amount=10&type=multiple")
   .then((response) => response.json())
   .then((data) => {
@@ -35,7 +39,9 @@ fetch("https://opentdb.com/api.php?amount=10&type=multiple")
   .catch((err) => {
     console.error(err);
   });
-
+for (let i = 0; i < questions.length; i++) {
+  trim(questions[i].question);
+}
 const SCORE_POINTS = 100;
 const MAX_QUESTIONS = 10;
 
@@ -58,7 +64,7 @@ function getNewQuestion() {
 
   const questionIndex = Math.floor(Math.random() * availableQuestions.length);
   currentQuestion = availableQuestions[questionIndex];
-  question.innerText = currentQuestion.question;
+  question.innerText = JSON.parse(trim(currentQuestion.question));
 
   choices.forEach((choice) => {
     const number = choice.dataset["number"];
