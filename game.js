@@ -9,44 +9,35 @@ let acceptingAnswers = true;
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
+let questions = [];
 
-let questions = [
-  {
-    question: "What is 2 + 2?",
-    choice1: "2",
-    choice2: "4",
-    choice3: "21",
-    choice4: "17",
-    answer: 2,
-  },
-  {
-    question: "What is 7 * 8?",
-    choice1: "33",
-    choice2: "42",
-    choice3: "56",
-    choice4: "23",
-    answer: 3,
-  },
-  {
-    question: "Who is the founder of Turkish Republic?",
-    choice1: "Ismet Inonu",
-    choice2: "Mustafa Kemal Ataturk",
-    choice3: "Fatih Sultan Mehmet",
-    choice4: "Adnan Menderes",
-    answer: 2,
-  },
-  {
-    question: "What is 121/11?",
-    choice1: "11",
-    choice2: "13",
-    choice3: "21",
-    choice4: "17",
-    answer: 1,
-  },
-];
+fetch("https://opentdb.com/api.php?amount=10&type=multiple")
+  .then((response) => response.json())
+  .then((data) => {
+    questions = data.results.map((data) => {
+      const formattedQuestion = {
+        question: data.question,
+      };
+      const answerChoices = [...data.incorrect_answers];
+      formattedQuestion.answer = Math.floor(Math.random() * 4) + 1;
+      answerChoices.splice(
+        formattedQuestion.answer - 1,
+        0,
+        data.correct_answer
+      );
+      answerChoices.forEach((choice, index) => {
+        formattedQuestion["choice" + (index + 1)] = choice;
+      });
+      return formattedQuestion;
+    });
+    startGame();
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 const SCORE_POINTS = 100;
-const MAX_QUESTIONS = 4;
+const MAX_QUESTIONS = 10;
 
 function startGame() {
   questionCounter = 0;
@@ -56,7 +47,7 @@ function startGame() {
 }
 
 function getNewQuestion() {
-  if (availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS) {
+  if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
     localStorage.setItem("mostRecentScore", score);
     return window.location.assign("/end.html");
   }
@@ -105,5 +96,3 @@ function incrementScore(num) {
   score += num;
   scoreText.innerText = score;
 }
-
-startGame();
