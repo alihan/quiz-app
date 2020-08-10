@@ -63,7 +63,7 @@ function getNewQuestion() {
 
   choices.forEach((choice) => {
     const number = choice.dataset["number"];
-    choice.innerText = currentQuestion["choice" + number];
+    choice.innerText = JSON.parse(trim(currentQuestion["choice" + number]));
   });
 
   availableQuestions.splice(questionIndex, 1);
@@ -82,10 +82,17 @@ choices.forEach((choice) => {
       selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
     if (classToApply === "correct") {
       incrementScore(SCORE_POINTS);
+    } else {
+      choices[currentQuestion.answer - 1].parentElement.classList.add(
+        "correct"
+      );
     }
     selectedChoice.parentElement.classList.add(classToApply);
     setTimeout(() => {
       selectedChoice.parentElement.classList.remove(classToApply);
+      choices[currentQuestion.answer - 1].parentElement.classList.remove(
+        "correct"
+      );
       getNewQuestion();
     }, 1000);
   });
