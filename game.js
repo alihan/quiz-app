@@ -3,7 +3,8 @@ const choices = Array.from(document.querySelectorAll(".choice-text"));
 const progressText = document.querySelector("#progressText");
 const scoreText = document.querySelector("#score");
 const progressBarFull = document.querySelector("#progressBarFull");
-
+const SCORE_POINTS = 100;
+const MAX_QUESTIONS = 10;
 let currentQuestion = {};
 let acceptingAnswers = true;
 let score = 0;
@@ -39,11 +40,6 @@ fetch("https://opentdb.com/api.php?amount=10&type=multiple")
   .catch((err) => {
     console.error(err);
   });
-for (let i = 0; i < questions.length; i++) {
-  trim(questions[i].question);
-}
-const SCORE_POINTS = 100;
-const MAX_QUESTIONS = 10;
 
 function startGame() {
   questionCounter = 0;
@@ -57,7 +53,6 @@ function getNewQuestion() {
     localStorage.setItem("mostRecentScore", score);
     return window.location.assign("/end.html");
   }
-
   questionCounter++;
   progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`;
   progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
@@ -78,8 +73,8 @@ function getNewQuestion() {
 choices.forEach((choice) => {
   choice.addEventListener("click", (e) => {
     if (!acceptingAnswers) return;
-
     acceptingAnswers = false;
+
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset["number"];
 
@@ -88,9 +83,7 @@ choices.forEach((choice) => {
     if (classToApply === "correct") {
       incrementScore(SCORE_POINTS);
     }
-
     selectedChoice.parentElement.classList.add(classToApply);
-
     setTimeout(() => {
       selectedChoice.parentElement.classList.remove(classToApply);
       getNewQuestion();
