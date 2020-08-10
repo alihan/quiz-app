@@ -96,4 +96,7 @@ body {
     min-width: 35rem;
     width: 90%;
   }
+  .choice-container:hover {
+    box-shadow: none;
+  }
 }
