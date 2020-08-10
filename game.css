@@ -73,6 +73,26 @@ body {
   background: rgba(11, 223, 36);
   width: 0%;
 }
+
+/* Loader */
+#loader {
+  border: 1.6rem solid white;
+  border-radius: 50%;
+  border-top: 1.6rem solid rgba(11, 223, 36);
+  width: 13rem;
+  height: 13rem;
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .choice-container {
     min-width: 40rem;
