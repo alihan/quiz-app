@@ -1,10 +1,10 @@
-const question = document.querySelector("#question");
-const choices = Array.from(document.querySelectorAll(".choice-text"));
-const progressText = document.querySelector("#progressText");
-const scoreText = document.querySelector("#score");
-const progressBarFull = document.querySelector("#progressBarFull");
-const loader = document.querySelector("#loader");
-const game = document.querySelector("#game");
+const question = document.querySelector('#question');
+const choices = Array.from(document.querySelectorAll('.choice-text'));
+const progressText = document.querySelector('#progressText');
+const scoreText = document.querySelector('#score');
+const progressBarFull = document.querySelector('#progressBarFull');
+const loader = document.querySelector('#loader');
+const game = document.querySelector('#game');
 const SCORE_POINTS = 100;
 const MAX_QUESTIONS = 10;
 let currentQuestion = {};
@@ -18,7 +18,7 @@ function trim(str) {
   return JSON.stringify(str).replace(/(&quot\;|&#039;)/g, "'");
 }
 
-fetch("https://opentdb.com/api.php?amount=10&type=multiple")
+fetch('https://opentdb.com/api.php?amount=10&type=multiple')
   .then((response) => response.json())
   .then((data) => {
     questions = data.results.map((data) => {
@@ -33,7 +33,7 @@ fetch("https://opentdb.com/api.php?amount=10&type=multiple")
         data.correct_answer
       );
       answerChoices.forEach((choice, index) => {
-        formattedQuestion["choice" + (index + 1)] = choice;
+        formattedQuestion['choice' + (index + 1)] = choice;
       });
       return formattedQuestion;
     });
@@ -48,14 +48,14 @@ function startGame() {
   score = 0;
   availableQuestions = [...questions];
   getNewQuestion();
-  game.classList.remove("hidden");
-  loader.classList.add("hidden");
+  game.classList.remove('hidden');
+  loader.classList.add('hidden');
 }
 
 function getNewQuestion() {
   if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
-    localStorage.setItem("mostRecentScore", score);
-    return window.location.assign("/end.html");
+    localStorage.setItem('mostRecentScore', score);
+    return window.location.assign('../end/end.html');
   }
   questionCounter++;
   progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`;
@@ -66,8 +66,8 @@ function getNewQuestion() {
   question.innerText = JSON.parse(trim(currentQuestion.question));
 
   choices.forEach((choice) => {
-    const number = choice.dataset["number"];
-    choice.innerText = JSON.parse(trim(currentQuestion["choice" + number]));
+    const number = choice.dataset['number'];
+    choice.innerText = JSON.parse(trim(currentQuestion['choice' + number]));
   });
 
   availableQuestions.splice(questionIndex, 1);
@@ -75,27 +75,27 @@ function getNewQuestion() {
 }
 
 choices.forEach((choice) => {
-  choice.addEventListener("click", (e) => {
+  choice.addEventListener('click', (e) => {
     if (!acceptingAnswers) return;
     acceptingAnswers = false;
 
     const selectedChoice = e.target;
-    const selectedAnswer = selectedChoice.dataset["number"];
+    const selectedAnswer = selectedChoice.dataset['number'];
 
     let classToApply =
-      selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
-    if (classToApply === "correct") {
+      selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';
+    if (classToApply === 'correct') {
       incrementScore(SCORE_POINTS);
     } else {
       choices[currentQuestion.answer - 1].parentElement.classList.add(
-        "correct"
+        'correct'
       );
     }
     selectedChoice.parentElement.classList.add(classToApply);
     setTimeout(() => {
       selectedChoice.parentElement.classList.remove(classToApply);
       choices[currentQuestion.answer - 1].parentElement.classList.remove(
-        "correct"
+        'correct'
       );
       getNewQuestion();
     }, 1000);
